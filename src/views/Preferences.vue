@@ -8,10 +8,6 @@ interface Artist {
   images: { url: string }[];
 }
 
-interface MoodSettings {
-  [key: string]: number;
-}
-
 const preferencesStore = usePreferencesStore()
 
 const artistSearch = ref<string>('')
