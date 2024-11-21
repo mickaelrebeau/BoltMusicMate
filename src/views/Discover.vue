@@ -8,7 +8,25 @@ const authStore = useAuthStore()
 const preferencesStore = usePreferencesStore()
 const playerStore = usePlayerStore()
 
-const recommendations = ref<any[]>([])
+interface Artist {
+  name: string;
+}
+
+interface Album {
+  images: { url: string }[];
+  name: string;
+}
+
+interface Track {
+  id: string;
+  name: string;
+  uri: string;
+  album: Album;
+  artists: Artist[];
+  external_urls: { spotify: string };
+}
+
+const recommendations = ref<Track[]>([])
 const isLoading = ref(false)
 const error = ref('')
 
@@ -53,11 +71,7 @@ onMounted(async () => {
   <div class="space-y-8">
     <div class="flex justify-between items-center">
       <h1 class="text-3xl font-bold">Discover New Music</h1>
-      <button
-        @click="fetchRecommendations"
-        class="btn btn-primary"
-        :disabled="isLoading"
-      >
+      <button @click="fetchRecommendations" class="btn btn-primary" :disabled="isLoading">
         Refresh
       </button>
     </div>
@@ -71,30 +85,16 @@ onMounted(async () => {
     </div>
 
     <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div
-        v-for="track in recommendations"
-        :key="track.id"
-        class="card hover:bg-gray-700/50 transition-colors"
-      >
-        <img
-          :src="track.album.images[0]?.url"
-          :alt="track.album.name"
-          class="w-full aspect-square object-cover rounded-lg mb-4"
-        />
+      <div v-for="track in recommendations" :key="track.id" class="card hover:bg-gray-700/50 transition-colors">
+        <img :src="track.album.images[0]?.url" :alt="track.album.name"
+          class="w-full aspect-square object-cover rounded-lg mb-4" />
         <h3 class="font-semibold text-lg">{{ track.name }}</h3>
-        <p class="text-gray-400">{{ track.artists.map(a => a.name).join(', ') }}</p>
+        <p class="text-gray-400">{{ track.artists.map((a: Artist) => a.name).join(', ') }}</p>
         <div class="flex justify-between items-center mt-4">
-          <button
-            @click="playerStore.playTrack(track.uri)"
-            class="btn btn-secondary"
-          >
+          <button @click="playerStore.playTrack(track.uri)" class="btn btn-secondary">
             {{ playerStore.currentTrack?.id === track.id && playerStore.isPlaying ? 'Pause' : 'Play' }}
           </button>
-          <a
-            :href="track.external_urls.spotify"
-            target="_blank"
-            class="text-spotify hover:text-spotify/80"
-          >
+          <a :href="track.external_urls.spotify" target="_blank" class="text-spotify hover:text-spotify/80">
             Open in Spotify
           </a>
         </div>
