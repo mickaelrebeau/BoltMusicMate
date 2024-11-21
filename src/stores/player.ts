@@ -14,8 +14,10 @@ export const usePlayerStore = defineStore("player", {
     async initializePlayer() {
       const authStore = useAuthStore();
 
+      // @ts-ignore
       if (!window.Spotify) {
         await new Promise((resolve) => {
+          // @ts-ignore
           window.onSpotifyWebPlaybackSDKReady = resolve;
           const script = document.createElement("script");
           script.src = "https://sdk.scdn.co/spotify-player.js";
@@ -23,6 +25,7 @@ export const usePlayerStore = defineStore("player", {
         });
       }
 
+      // @ts-ignore
       this.player = new window.Spotify.Player({
         name: "Bolt - MusicMate",
         getOAuthToken: (cb: (token: string) => void) => {
