@@ -13,12 +13,12 @@ onMounted(async () => {
   if (code) {
     const success = await authStore.handleCallback(code)
     if (success) {
-      router.push('/discover')
+      router.push('/preferences')
     } else {
-      router.push('/login')
+      router.push('/')
     }
   } else {
-    router.push('/login')
+    router.push('/')
   }
 })
 </script>

@@ -4,6 +4,7 @@ import { useAuthStore } from '../stores/auth'
 
 const router = useRouter()
 const authStore = useAuthStore()
+const loginUrl = authStore.getLoginUrl()
 
 if (authStore.isAuthenticated) {
   router.push('/discover')
@@ -12,15 +13,15 @@ if (authStore.isAuthenticated) {
 
 <template>
   <div class="flex flex-col items-center justify-center min-h-[80vh] space-y-8">
-    <h1 class="text-4xl font-bold text-white">Spotify Discovery</h1>
+    <h1 class="text-4xl font-bold text-white">Welcome to Spotify Discovery</h1>
     <p class="text-gray-400 text-center max-w-md">
-      Discover new music tailored to your taste. Connect with Spotify to get started.
+      Discover new music based on your preferences and create the perfect playlist for any moment.
     </p>
-    <router-link
-      to="/login"
-      class="btn btn-primary"
+    <a
+      :href="loginUrl"
+      class="btn btn-primary flex items-center space-x-2"
     >
-      Get Started
-    </router-link>
+      <span>Login with Spotify</span>
+    </a>
   </div>
 </template>
