@@ -15,6 +15,7 @@ const searchResults = ref<Artist[]>([])
 const isSearching = ref<boolean>(false)
 
 onMounted(() => {
+  preferencesStore.loadPreferences()
   preferencesStore.fetchAvailableGenres()
 })
 
@@ -29,12 +30,12 @@ const searchArtists = async (): Promise<void> => {
 
 <template>
   <div class="space-y-8">
-    <h1 class="text-3xl font-bold">Your Music Preferences</h1>
+    <h1 class="text-arvo">Your Music Preferences</h1>
     <div class="card space-y-6">
-      <h2 class="text-xl font-semibold">Genres</h2>
-      <div class="flex flex-wrap gap-2">
+      <h2 class="text-arvo">Genres</h2>
+      <div class="py-4 flex flex-wrap gap-2 max-h-[500px] overflow-y-auto">
         <button v-for="genre in preferencesStore.availableGenres" :key="genre"
-          @click="preferencesStore.toggleGenre(genre)" :class="[
+          @click="preferencesStore.toggleGenre(genre)" :class="[ 
             'btn',
             preferencesStore.selectedGenres.includes(genre)
               ? 'btn-primary'
@@ -45,10 +46,10 @@ const searchArtists = async (): Promise<void> => {
       </div>
     </div>
     <div class="card space-y-6">
-      <h2 class="text-xl font-semibold">Mood Settings</h2>
+      <h2 class="text-arvo">Mood Settings</h2>
       <div class="space-y-4">
         <div v-for="(value, key) in preferencesStore.mood" :key="key">
-          <label :for="key" class="block text-sm font-medium text-gray-400 mb-2">
+          <label :for="key" class="block text-sm font-medium text-white mb-2">
             {{ key.charAt(0).toUpperCase() + key.slice(1) }}
           </label>
           <input :id="key" type="range" min="0" max="1" step="0.1" :value="value"
@@ -58,11 +59,11 @@ const searchArtists = async (): Promise<void> => {
       </div>
     </div>
     <div class="card space-y-6">
-      <h2 class="text-xl font-semibold">Favorite Artists</h2>
+      <h2 class="text-arvo">Favorite Artists</h2>
       <div class="space-y-4">
         <div class="flex gap-2">
           <input v-model="artistSearch" type="text" placeholder="Search artists..."
-            class="flex-1 bg-gray-700 rounded-lg px-4 py-2" @keyup.enter="searchArtists" />
+            class="flex-1 bg-white rounded-lg px-4 py-2" @keyup.enter="searchArtists" />
           <button @click="searchArtists" class="btn btn-primary" :disabled="isSearching">
             Search
           </button>
@@ -96,3 +97,12 @@ const searchArtists = async (): Promise<void> => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.text-arvo {
+  font-family: "Arvo", serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 2rem;
+}
+</style>

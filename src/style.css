@@ -2,9 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Arvo:wght@700&display=swap');
+
 @layer base {
   body {
-    @apply bg-gray-900 text-white;
+    @apply bg-green-950 text-white;
   }
 }
 
@@ -18,11 +20,23 @@
   }
   
   .btn-secondary {
-    @apply bg-gray-800 hover:bg-gray-700 text-white;
+    @apply bg-green-900 hover:bg-green-700 text-white;
   }
   
   .card {
-    @apply bg-gray-800 rounded-xl p-4 shadow-lg;
+    @apply bg-green-950/75 backdrop-blur-sm rounded-xl p-4 shadow-lg;
+  }
+
+  .card-music {
+    @apply flex flex-col justify-between bg-green-950 rounded-xl p-4 shadow-lg;
+  }
+
+  .font-arvo-bold {
+    @apply arvo-bold
+  }
+
+  .btn-shadow {
+    @apply shadow-hover
   }
 }
 
@@ -34,4 +48,22 @@
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.arvo-bold {
+  font-family: "Arvo", serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 10rem;
+}
+
+.arvo-bold-md {
+  font-family: "Arvo", serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 4rem;
+}
+
+.shadow-hover {
+  box-shadow: 12px 15px 0 rgba(0, 0, 0, 1);
 }

@@ -70,7 +70,7 @@ onMounted(async () => {
 <template>
   <div class="space-y-8">
     <div class="flex justify-between items-center">
-      <h1 class="text-3xl font-bold">Discover New Music</h1>
+      <h1 class="text-arvo">Discover New Music</h1>
       <button @click="fetchRecommendations" class="btn btn-primary" :disabled="isLoading">
         Refresh
       </button>
@@ -85,14 +85,25 @@ onMounted(async () => {
     </div>
 
     <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div v-for="track in recommendations" :key="track.id" class="card hover:bg-gray-700/50 transition-colors">
+      <div v-for="track in recommendations" :key="track.id" class="card-music transition-colors">
         <img :src="track.album.images[0]?.url" :alt="track.album.name"
           class="w-full aspect-square object-cover rounded-lg mb-4" />
         <h3 class="font-semibold text-lg">{{ track.name }}</h3>
         <p class="text-gray-400">{{ track.artists.map((a: Artist) => a.name).join(', ') }}</p>
         <div class="flex justify-between items-center mt-4">
-          <button @click="playerStore.playTrack(track.uri)" class="btn btn-secondary">
-            {{ playerStore.currentTrack?.id === track.id && playerStore.isPlaying ? 'Pause' : 'Play' }}
+          <button @click="playerStore.playTrack(track.uri)" class="btn btn-secondary flex items-center justify-center">
+            <span class="flex items-center gap-2" v-if="playerStore.currentTrack?.id === track.id && playerStore.isPlaying">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 9v6m4-6v6" />
+              </svg>
+              Pause
+            </span>
+            <span v-else class="flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-5.197-3.018A1 1 0 008 8.882v6.236a1 1 0 001.555.832l5.197-3.018a1 1 0 000-1.664z" />
+              </svg>
+              Play
+            </span>
           </button>
           <a :href="track.external_urls.spotify" target="_blank" class="text-spotify hover:text-spotify/80">
             Open in Spotify
@@ -102,3 +113,13 @@ onMounted(async () => {
     </div>
   </div>
 </template>
+
+
+<style scoped>
+.text-arvo {
+  font-family: "Arvo", serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 2rem;
+}
+</style>
