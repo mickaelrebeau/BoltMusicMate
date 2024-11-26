@@ -63,7 +63,7 @@ const searchArtists = async (): Promise<void> => {
       <div class="space-y-4">
         <div class="flex gap-2">
           <input v-model="artistSearch" type="text" placeholder="Search artists..."
-            class="flex-1 bg-white rounded-lg px-4 py-2" @keyup.enter="searchArtists" />
+            class="flex-1 bg-white text-black rounded-lg px-4 py-2" @keyup.enter="searchArtists" />
           <button @click="searchArtists" class="btn btn-primary" :disabled="isSearching">
             Search
           </button>
